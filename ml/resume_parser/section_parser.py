@@ -46,7 +46,9 @@ SECTION_ALIASES = {
         "academic coursework",
         "courses",
         "relevant courses",
-        "subjects"
+        "subjects",
+        "coursework and skills",
+        "coursework skills"
     ],
 
     # -------------------------
@@ -67,11 +69,13 @@ SECTION_ALIASES = {
         "competencies",
         "technologies",
         "tools and technologies",
-        "tools & technologies",
         "technical proficiencies",
         "technical knowledge",
         "skills and technologies",
-        "skills & technologies"
+        "technical skill set",
+        "technical skillset",
+        "technical abilities",
+        "technical knowledge and skills"
     ],
 
     # -------------------------
@@ -285,13 +289,22 @@ SECTION_ALIASES = {
 
 
 def normalize_heading(line):
+
     line = line.strip().lower()
 
+    # Normalize common PDF characters
+    line = line.replace("–", "-")
+    line = line.replace("—", "-")
+
+    # Normalize &
+    line = line.replace("&", "and")
+
+    # Remove common punctuation
     line = line.replace(":", "")
     line = line.replace("•", "")
     line = line.replace("|", "")
-    line = line.replace("&", "and")
 
+    # Remove extra spaces
     line = " ".join(line.split())
 
     return line
@@ -300,6 +313,7 @@ def normalize_heading(line):
 def identify_section(line):
 
     line = normalize_heading(line)
+
 
     for section, aliases in SECTION_ALIASES.items():
 
@@ -310,6 +324,24 @@ def identify_section(line):
 
         if line in normalized_aliases:
             return section
+
+    if "technical skills" in line:
+        return "skills"
+
+    if line.endswith("skills"):
+        return "skills"
+
+    if line.endswith("experience"):
+        return "experience"
+
+    if line.endswith("projects"):
+        return "projects"
+
+    if line.endswith("certifications"):
+        return "certifications"
+
+    if line.endswith("education"):
+        return "education"
 
     return None
 
@@ -333,9 +365,11 @@ def parse_sections(text):
         if detected_section:
 
             current_section = detected_section
-            sections[current_section] = []
 
-            # Do not store the heading as content
+            if current_section not in sections:
+                sections[current_section] = []
+
+            # Don't add heading itself as content
             continue
 
         if current_section:
@@ -362,19 +396,44 @@ def create_resume_profile(sections, name):
 
     profile = {
 
-        "name": name,
+        "personal": {
+            "name": name
+        },
+
+        "summary": sections.get("summary", []),
 
         "education": sections.get("education", []),
+
+        "coursework": sections.get("coursework", []),
 
         "skills": sections.get("skills", []),
 
         "experience": sections.get("experience", []),
 
+        "internships": sections.get("internships", []),
+
+        "research": sections.get("research_experience", []),
+
         "projects": sections.get("projects", []),
 
         "certifications": sections.get("certifications", []),
 
-        "achievements": sections.get("achievements", [])
+        "achievements": sections.get("achievements", []),
+
+        "awards": sections.get("awards", []),
+
+        "publications": sections.get("publications", []),
+
+        "leadership": sections.get("leadership", []),
+
+        "volunteering": sections.get("volunteering", []),
+
+        "extracurricular": sections.get("extracurricular", []),
+
+        "languages": sections.get("languages", []),
+
+        "interests": sections.get("interests", [])
+
     }
 
     return profile
