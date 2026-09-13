@@ -325,24 +325,6 @@ def identify_section(line):
         if line in normalized_aliases:
             return section
 
-    if "technical skills" in line:
-        return "skills"
-
-    if line.endswith("skills"):
-        return "skills"
-
-    if line.endswith("experience"):
-        return "experience"
-
-    if line.endswith("projects"):
-        return "projects"
-
-    if line.endswith("certifications"):
-        return "certifications"
-
-    if line.endswith("education"):
-        return "education"
-
     return None
 
 
