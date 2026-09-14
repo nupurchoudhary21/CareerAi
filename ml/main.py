@@ -16,6 +16,11 @@ from resume_parser.section_parser import (
 
 from resume_parser.skill_evidence import build_skill_evidence
 
+from resume_parser.skill_hierarchy import (
+    build_skill_hierarchy,
+    deduplicate_skills
+)
+
 
 pdf_path = "../datasets/resumes/resume2.pdf"
 
@@ -45,11 +50,28 @@ skill_profile = extract_skills_from_profile(profile)
 # Flatten skills into one list
 all_skills = get_all_skills(skill_profile)
 
+# Remove duplicate skills
+unique_skills = deduplicate_skills(all_skills)
+
+
 # Build skill evidence
 skill_evidence = build_skill_evidence(
     profile,
     SKILL_ONTOLOGY
 )
+
+# Build skill hierarchy
+skill_hierarchy = build_skill_hierarchy(
+    unique_skills
+)
+
+print("\n========== SKILL HIERARCHY ==========")
+
+for skill, relationship in skill_hierarchy.items():
+
+    print(f"\n{skill}")
+    print(f"Parent: {relationship['parent']}")
+    print(f"Children: {relationship['children']}")
 
 
 print("\n========== CONTACT INFORMATION ==========\n")
@@ -64,6 +86,14 @@ print(skill_profile)
 print("\n========== ALL SKILLS ==========\n")
 print(all_skills)
 
+print("\n========== SKILL HIERARCHY ==========")
+
+for skill, relationship in skill_hierarchy.items():
+
+    print(f"\n{skill}")
+    print(f"Parent: {relationship['parent']}")
+    print(f"Children: {relationship['children']}")
+
 print("\n========== SKILL EVIDENCE ==========")
 
 for skill, evidence in skill_evidence.items():
@@ -71,4 +101,8 @@ for skill, evidence in skill_evidence.items():
     print(f"\n{skill}")
     print(f"Category: {evidence['category']}")
     print(f"Sources: {evidence['sources']}")
+    print(f"Explicit: {evidence['explicit']}")
+    print(f"Inferred: {evidence['inferred']}")
     print(f"Confidence: {evidence['confidence']}")
+
+ 

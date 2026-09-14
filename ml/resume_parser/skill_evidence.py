@@ -47,9 +47,6 @@ def build_skill_evidence(profile, skill_onotology):
                 if not section_data:
                     continue
 
-                if not section_data:
-                    continue
-
                 if isinstance(section_data, list):
                     section_text = " ".join(section_data)
 
@@ -64,9 +61,23 @@ def build_skill_evidence(profile, skill_onotology):
 
             if sources:
 
+                explicit = "skills" in sources
+
+                inferred = any(
+                    source in sources 
+                    for source in [
+                        "projects",
+                        "experience",
+                        "internships",
+                        "research"
+                    ]
+                )
+
                 skill_evidence[canonical_name] = {
                     "category": category,
                     "sources": sources,
+                    "explicit": explicit,
+                    "inferred": inferred,
                     "confidence": calculator_confidence(sources)
                 }              
 
