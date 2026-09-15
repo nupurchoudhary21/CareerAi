@@ -176,4 +176,54 @@ for skill, data in final_skill_profile.items():
     )    
 
 
+
+
+
+
+from job_analyzer.jd_cleaner import clean_job_description
+from job_analyzer.jd_section_parser import parse_job_description
+from job_analyzer.jd_skill_extractor import extract_skills_from_jd
+from job_analyzer.jd_profile_builder import build_jd_profile
+
+
+jd_text = """
+Software Engineer
+
+Requirements:
+- Strong Python and JavaScript
+- Experience with React and Node.js
+- Knowledge of MongoDB
+- Good problem solving skills
+
+Preferred:
+- Docker
+- FastAPI
+- AWS
+
+Responsibilities:
+- Build REST APIs
+- Develop web applications
+- Work with databases
+"""
+
+cleaned_jd = clean_job_description(jd_text)
+
+jd_sections = parse_job_description(cleaned_jd)
+
+jd_skills = extract_skills_from_jd(jd_sections)
+
+jd_profile = build_jd_profile(
+    jd_sections,
+    jd_skills
+)
+
+print("\n--- JD SECTIONS ---")
+print(jd_sections)
+
+print("\n--- JD SKILLS ---")
+print(jd_skills)
+
+print("\n--- JD PROFILE ---")
+print(jd_profile)
+
  
