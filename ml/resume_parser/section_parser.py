@@ -76,6 +76,9 @@ SECTION_ALIASES = {
         "technical skillset",
         "technical abilities",
         "technical knowledge and skills"
+        "technicalskills",
+        "technical skill",
+        "technical skills",
     ],
 
     # -------------------------
@@ -128,7 +131,8 @@ SECTION_ALIASES = {
         "relevant projects",
         "project experience",
         "academic project",
-        "personal project"
+        "personal project",
+        "selected security projects"
     ],
 
     # -------------------------

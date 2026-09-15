@@ -1,6 +1,8 @@
 from resume_parser.pdf_parser import extract_text_from_pdf
 from resume_parser.text_cleaner import clean_text
 from resume_parser.contact_extractor import extract_contact_info
+from resume_parser.skill_strength import build_skill_strength
+from resume_parser.profile_builder import build_final_skill_profile
 
 from resume_parser.skill_extractor import (
     extract_skills_from_profile,
@@ -22,7 +24,7 @@ from resume_parser.skill_hierarchy import (
 )
 
 
-pdf_path = "../datasets/resumes/resume2.pdf"
+pdf_path = "../datasets/resumes/resume3.pdf"
 
 raw_text = extract_text_from_pdf(pdf_path)
 
@@ -65,6 +67,26 @@ skill_hierarchy = build_skill_hierarchy(
     unique_skills
 )
 
+skill_evidence = build_skill_evidence(
+    profile,
+    SKILL_ONTOLOGY
+)
+
+skill_strength = build_skill_strength(
+    skill_evidence
+)
+
+skill_hierarchy = build_skill_hierarchy(
+    unique_skills
+)
+
+final_skill_profile = build_final_skill_profile(
+    skill_profile,
+    skill_evidence,
+    skill_strength,
+    skill_hierarchy
+)
+
 print("\n========== SKILL HIERARCHY ==========")
 
 for skill, relationship in skill_hierarchy.items():
@@ -104,5 +126,54 @@ for skill, evidence in skill_evidence.items():
     print(f"Explicit: {evidence['explicit']}")
     print(f"Inferred: {evidence['inferred']}")
     print(f"Confidence: {evidence['confidence']}")
+
+
+print("\n========== SKILL STRENGTH ==========")
+
+for skill, strength in skill_strength.items():
+
+    print(f"\n{skill}")
+    print(f"Score: {strength['score']}")
+    print(f"Level: {strength['level']}")    
+
+
+print("\n========== FINAL SKILL PROFILE ==========")
+
+for skill, data in final_skill_profile.items():
+
+    print(f"\n{skill}")
+
+    print(f"Category: {data['category']}")
+
+    print(
+        f"Sources: "
+        f"{data['evidence'].get('sources', [])}"
+    )
+
+    print(
+        f"Confidence: "
+        f"{data['evidence'].get('confidence')}"
+    )
+
+    print(
+        f"Strength: "
+        f"{data['strength'].get('score')}"
+    )
+
+    print(
+        f"Level: "
+        f"{data['strength'].get('level')}"
+    )
+
+    print(
+        f"Parent: "
+        f"{data['hierarchy'].get('parent')}"
+    )
+
+    print(
+        f"Children: "
+        f"{data['hierarchy'].get('children', [])}"
+    )    
+
 
  
