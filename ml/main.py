@@ -4,6 +4,7 @@ from resume_parser.contact_extractor import extract_contact_info
 from resume_parser.skill_strength import build_skill_strength
 from resume_parser.profile_builder import build_final_skill_profile
 
+
 from resume_parser.skill_extractor import (
     extract_skills_from_profile,
     get_all_skills,
@@ -24,7 +25,7 @@ from resume_parser.skill_hierarchy import (
 )
 
 
-pdf_path = "../datasets/resumes/resume3.pdf"
+pdf_path = "../datasets/resumes/resume2.pdf"
 
 raw_text = extract_text_from_pdf(pdf_path)
 
@@ -177,14 +178,14 @@ for skill, data in final_skill_profile.items():
 
 
 
-
+# job analyse 
 
 
 from job_analyzer.jd_cleaner import clean_job_description
 from job_analyzer.jd_section_parser import parse_job_description
 from job_analyzer.jd_skill_extractor import extract_skills_from_jd
 from job_analyzer.jd_profile_builder import build_jd_profile
-
+from job_analyzer.skill_matcher import match_skills
 
 jd_text = """
 Software Engineer
@@ -217,13 +218,23 @@ jd_profile = build_jd_profile(
     jd_skills
 )
 
-print("\n--- JD SECTIONS ---")
-print(jd_sections)
+# print("\n--- JD SECTIONS ---")
+# print(jd_sections)
 
-print("\n--- JD SKILLS ---")
-print(jd_skills)
+# print("\n--- JD SKILLS ---")
+# print(jd_skills)
 
-print("\n--- JD PROFILE ---")
-print(jd_profile)
+# print("\n--- JD PROFILE ---")
+# print(jd_profile)
 
+
+resume_skills = get_all_skills(skill_profile)
+
+skill_match = match_skills(
+    resume_skills,
+    jd_profile
+)
+
+print("\n--- SKILL MATCH ---")
+print(skill_match)
  
