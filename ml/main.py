@@ -187,6 +187,11 @@ from job_analyzer.jd_skill_extractor import extract_skills_from_jd
 from job_analyzer.jd_profile_builder import build_jd_profile
 from job_analyzer.skill_matcher import match_skills
 from job_analyzer.match_score import calculate_match_score
+from job_analyzer.skill_gap import build_skill_gap
+from job_analyzer.evidence_matcher import (
+    build_evidence_aware_match
+)
+
 
 jd_text = """
 Software Engineer
@@ -243,4 +248,18 @@ match_score = calculate_match_score(skill_match)
 
 print("\n--- MATCH SCORE ---")
 print(match_score)
+
+skill_gap = build_skill_gap(skill_match)
+
+print("\n--- SKILL GAP ---")
+print(skill_gap)
+
+evidence_match = build_evidence_aware_match(
+    final_skill_profile,
+    jd_profile
+)
+
+print("\n--- EVIDENCE AWARE MATCH ---")
+print(evidence_match)
+
  
