@@ -186,6 +186,7 @@ from job_analyzer.jd_section_parser import parse_job_description
 from job_analyzer.jd_skill_extractor import extract_skills_from_jd
 from job_analyzer.jd_profile_builder import build_jd_profile
 from job_analyzer.skill_matcher import match_skills
+from job_analyzer.match_score import calculate_match_score
 
 jd_text = """
 Software Engineer
@@ -237,4 +238,9 @@ skill_match = match_skills(
 
 print("\n--- SKILL MATCH ---")
 print(skill_match)
+
+match_score = calculate_match_score(skill_match)
+
+print("\n--- MATCH SCORE ---")
+print(match_score)
  
