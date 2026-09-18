@@ -262,4 +262,14 @@ evidence_match = build_evidence_aware_match(
 print("\n--- EVIDENCE AWARE MATCH ---")
 print(evidence_match)
 
+from job_analyzer.unified_matcher import build_unified_match
+unified_match = build_unified_match(
+    resume_skills,
+    final_skill_profile,
+    jd_profile,
+    skill_hierarchy
+)
+
+print("\n========== UNIFIED MATCH ==========")
+print(unified_match)
  
