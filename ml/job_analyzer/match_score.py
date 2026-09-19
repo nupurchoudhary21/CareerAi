@@ -9,7 +9,7 @@ def calculate_match_score(skill_match):
     total_required = len(matched_required) + len(missing_required)
     total_preferred = len(matched_preferred) + len(missing_preferred)
 
-    if total_preferred > 0:
+    if total_required > 0:
         required_score =(
             len(matched_required)/ total_required
         ) * 70

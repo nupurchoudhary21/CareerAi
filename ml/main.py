@@ -1,9 +1,12 @@
+# ==========================================
+# RESUME PARSER
+# ==========================================
+
 from resume_parser.pdf_parser import extract_text_from_pdf
 from resume_parser.text_cleaner import clean_text
 from resume_parser.contact_extractor import extract_contact_info
 from resume_parser.skill_strength import build_skill_strength
 from resume_parser.profile_builder import build_final_skill_profile
-
 
 from resume_parser.skill_extractor import (
     extract_skills_from_profile,
@@ -17,7 +20,9 @@ from resume_parser.section_parser import (
     extract_name
 )
 
-from resume_parser.skill_evidence import build_skill_evidence
+from resume_parser.skill_evidence import (
+    build_skill_evidence
+)
 
 from resume_parser.skill_hierarchy import (
     build_skill_hierarchy,
@@ -25,61 +30,106 @@ from resume_parser.skill_hierarchy import (
 )
 
 
+# ==========================================
+# JOB ANALYZER
+# ==========================================
+
+from job_analyzer.job_loader import load_jobs
+from job_analyzer.jd_cleaner import clean_job_description
+from job_analyzer.jd_section_parser import parse_job_description
+from job_analyzer.jd_skill_extractor import extract_skills_from_jd
+from job_analyzer.jd_profile_builder import build_jd_profile
+
+
+# ==========================================
+# MATCHING
+# ==========================================
+
+from job_analyzer.unified_matcher import (
+    build_unified_match
+)
+
+
+# ==========================================
+# 1. PROCESS RESUME
+# ==========================================
+
 pdf_path = "../datasets/resumes/resume2.pdf"
 
-raw_text = extract_text_from_pdf(pdf_path)
+raw_text = extract_text_from_pdf(
+    pdf_path
+)
 
-cleaned_text = clean_text(raw_text)
+cleaned_text = clean_text(
+    raw_text
+)
 
-contact_info = extract_contact_info(cleaned_text)
+contact_info = extract_contact_info(
+    cleaned_text
+)
 
-name = extract_name(cleaned_text)
+name = extract_name(
+    cleaned_text
+)
 
-sections = parse_sections(cleaned_text)
+sections = parse_sections(
+    cleaned_text
+)
 
-profile = create_resume_profile(sections, name)
-
-
-print("\n========== TEXT SENT TO SKILL EXTRACTOR ==========\n")
-
-for section in ["skills", "projects"]:
-    print(f"\n--- {section.upper()} ---")
-    print(profile.get(section, []))
-
-
-# Extract skills
-skill_profile = extract_skills_from_profile(profile)
-
-# Flatten skills into one list
-all_skills = get_all_skills(skill_profile)
-
-# Remove duplicate skills
-unique_skills = deduplicate_skills(all_skills)
+profile = create_resume_profile(
+    sections,
+    name
+)
 
 
-# Build skill evidence
+# ==========================================
+# 2. EXTRACT RESUME SKILLS
+# ==========================================
+
+skill_profile = extract_skills_from_profile(
+    profile
+)
+
+all_skills = get_all_skills(
+    skill_profile
+)
+
+unique_skills = deduplicate_skills(
+    all_skills
+)
+
+
+# ==========================================
+# 3. RESUME EVIDENCE
+# ==========================================
+
 skill_evidence = build_skill_evidence(
     profile,
     SKILL_ONTOLOGY
 )
 
-# Build skill hierarchy
-skill_hierarchy = build_skill_hierarchy(
-    unique_skills
-)
 
-skill_evidence = build_skill_evidence(
-    profile,
-    SKILL_ONTOLOGY
-)
+# ==========================================
+# 4. RESUME STRENGTH
+# ==========================================
 
 skill_strength = build_skill_strength(
     skill_evidence
 )
 
+
+# ==========================================
+# 5. RESUME HIERARCHY
+# ==========================================
+
 skill_hierarchy = build_skill_hierarchy(
     unique_skills
 )
+
+
+# ==========================================
+# 6. FINAL RESUME SKILL PROFILE
+# ==========================================
 
 final_skill_profile = build_final_skill_profile(
     skill_profile,
@@ -88,188 +138,158 @@ final_skill_profile = build_final_skill_profile(
     skill_hierarchy
 )
 
-print("\n========== SKILL HIERARCHY ==========")
 
-for skill, relationship in skill_hierarchy.items():
+print("\n========== RESUME ==========")
+print("Name:", name)
 
-    print(f"\n{skill}")
-    print(f"Parent: {relationship['parent']}")
-    print(f"Children: {relationship['children']}")
-
-
-print("\n========== CONTACT INFORMATION ==========\n")
-print(contact_info)
-
-print("\n========== RESUME PROFILE ==========\n")
-print(profile)
-
-print("\n========== SKILL PROFILE ==========\n")
-print(skill_profile)
-
-print("\n========== ALL SKILLS ==========\n")
-print(all_skills)
-
-print("\n========== SKILL HIERARCHY ==========")
-
-for skill, relationship in skill_hierarchy.items():
-
-    print(f"\n{skill}")
-    print(f"Parent: {relationship['parent']}")
-    print(f"Children: {relationship['children']}")
-
-print("\n========== SKILL EVIDENCE ==========")
-
-for skill, evidence in skill_evidence.items():
-
-    print(f"\n{skill}")
-    print(f"Category: {evidence['category']}")
-    print(f"Sources: {evidence['sources']}")
-    print(f"Explicit: {evidence['explicit']}")
-    print(f"Inferred: {evidence['inferred']}")
-    print(f"Confidence: {evidence['confidence']}")
+print("\nResume Skills:")
+print(unique_skills)
 
 
-print("\n========== SKILL STRENGTH ==========")
+# ==========================================
+# 7. LOAD JOB DATASET
+# ==========================================
 
-for skill, strength in skill_strength.items():
+jobs = load_jobs(
+    "../datasets/jobs/jobs.csv"
+)
 
-    print(f"\n{skill}")
-    print(f"Score: {strength['score']}")
-    print(f"Level: {strength['level']}")    
-
-
-print("\n========== FINAL SKILL PROFILE ==========")
-
-for skill, data in final_skill_profile.items():
-
-    print(f"\n{skill}")
-
-    print(f"Category: {data['category']}")
-
-    print(
-        f"Sources: "
-        f"{data['evidence'].get('sources', [])}"
-    )
-
-    print(
-        f"Confidence: "
-        f"{data['evidence'].get('confidence')}"
-    )
-
-    print(
-        f"Strength: "
-        f"{data['strength'].get('score')}"
-    )
-
-    print(
-        f"Level: "
-        f"{data['strength'].get('level')}"
-    )
-
-    print(
-        f"Parent: "
-        f"{data['hierarchy'].get('parent')}"
-    )
-
-    print(
-        f"Children: "
-        f"{data['hierarchy'].get('children', [])}"
-    )    
+print("\nTotal Jobs:", len(jobs))
 
 
+# ==========================================
+# 8. TEST ONE JOB
+# ==========================================
 
-# job analyse 
+job = jobs[1]
+
+print("\n========== SELECTED JOB ==========")
+print("Title:", job["job_title"])
 
 
-from job_analyzer.jd_cleaner import clean_job_description
-from job_analyzer.jd_section_parser import parse_job_description
-from job_analyzer.jd_skill_extractor import extract_skills_from_jd
-from job_analyzer.jd_profile_builder import build_jd_profile
-from job_analyzer.skill_matcher import match_skills
-from job_analyzer.match_score import calculate_match_score
-from job_analyzer.skill_gap import build_skill_gap
-from job_analyzer.evidence_matcher import (
-    build_evidence_aware_match
+# ==========================================
+# 9. CLEAN JD
+# ==========================================
+
+cleaned_jd = clean_job_description(
+    job["job_description"]
 )
 
 
-jd_text = """
-Software Engineer
+# ==========================================
+# 10. PARSE JD
+# ==========================================
 
-Requirements:
-- Strong Python and JavaScript
-- Experience with React and Node.js
-- Knowledge of MongoDB
-- Good problem solving skills
+jd_sections = parse_job_description(
+    cleaned_jd
+)
 
-Preferred:
-- Docker
-- FastAPI
-- AWS
+print("\n========== DIRECT JD SKILL TEST ==========")
 
-Responsibilities:
-- Build REST APIs
-- Develop web applications
-- Work with databases
-"""
+test_text = " ".join(jd_sections["required"])
 
-cleaned_jd = clean_job_description(jd_text)
+from resume_parser.skill_extractor import SKILL_ONTOLOGY
+from resume_parser.skill_extractor import skill_found_in_text
 
-jd_sections = parse_job_description(cleaned_jd)
+for category, skills in SKILL_ONTOLOGY.items():
 
-jd_skills = extract_skills_from_jd(jd_sections)
+    for canonical_name, aliases in skills.items():
+
+        if skill_found_in_text(test_text, aliases):
+            print("FOUND:", canonical_name)
+
+
+print("\n========== JD SECTIONS ==========")
+
+print("\nREQUIRED:")
+print(jd_sections["required"])
+
+print("\nPREFERRED:")
+print(jd_sections["preferred"])
+
+print("\nRESPONSIBILITIES:")
+print(jd_sections["responsibilities"])
+
+
+# ==========================================
+# 11. EXTRACT JD SKILLS
+# ==========================================
+
+jd_skills = extract_skills_from_jd(
+    jd_sections
+)
+
+
+# ==========================================
+# 12. BUILD JD PROFILE
+# ==========================================
 
 jd_profile = build_jd_profile(
     jd_sections,
     jd_skills
 )
 
-# print("\n--- JD SECTIONS ---")
-# print(jd_sections)
 
-# print("\n--- JD SKILLS ---")
-# print(jd_skills)
+print("\n========== JD PROFILE ==========")
 
-# print("\n--- JD PROFILE ---")
-# print(jd_profile)
+print("\nRequired Skills:")
+print(jd_profile["required"]["skills"])
 
+print("\nPreferred Skills:")
+print(jd_profile["preferred"]["skills"])
 
-resume_skills = get_all_skills(skill_profile)
-
-skill_match = match_skills(
-    resume_skills,
-    jd_profile
+print("\nResponsibility Skills:")
+print(
+    jd_profile["responsibilities"]["skills"]
 )
 
-print("\n--- SKILL MATCH ---")
-print(skill_match)
 
-match_score = calculate_match_score(skill_match)
+# ==========================================
+# 13. UNIFIED MATCH
+# ==========================================
 
-print("\n--- MATCH SCORE ---")
-print(match_score)
-
-skill_gap = build_skill_gap(skill_match)
-
-print("\n--- SKILL GAP ---")
-print(skill_gap)
-
-evidence_match = build_evidence_aware_match(
-    final_skill_profile,
-    jd_profile
-)
-
-print("\n--- EVIDENCE AWARE MATCH ---")
-print(evidence_match)
-
-from job_analyzer.unified_matcher import build_unified_match
 unified_match = build_unified_match(
-    resume_skills,
+    unique_skills,
     final_skill_profile,
     jd_profile,
     skill_hierarchy
 )
 
-print("\n========== UNIFIED MATCH ==========")
-print(unified_match)
- 
+
+# ==========================================
+# 14. PRINT MATCH RESULT
+# ==========================================
+
+print("\n========== MATCH SCORE ==========")
+
+print(
+    unified_match["match_score"]
+)
+
+
+print("\n========== SKILL MATCH ==========")
+
+print(
+    unified_match["skill_match"]
+)
+
+
+print("\n========== SKILL GAP ==========")
+
+print(
+    unified_match["skill_gap"]
+)
+
+
+print("\n========== EVIDENCE MATCH ==========")
+
+print(
+    unified_match["evidence_match"]
+)
+
+
+print("\n========== HIERARCHY MATCH ==========")
+
+print(
+    unified_match["hierarchy_match"]
+)

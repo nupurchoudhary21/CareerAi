@@ -3,7 +3,9 @@ from resume_parser.skill_extractor import (
     SKILL_ONTOLOGY
 )
 
+
 def extract_skills_from_jd(sections):
+
     result = {
         "required": [],
         "preferred": [],
@@ -12,7 +14,13 @@ def extract_skills_from_jd(sections):
 
     for section_name, section_data in sections.items():
 
+        if section_name not in result:
+            continue
+
         section_text = " ".join(section_data)
+
+        print("\nCHECKING SECTION:", section_name)
+        print("SECTION TEXT:", section_text)
 
         for category, skills in SKILL_ONTOLOGY.items():
 
@@ -22,9 +30,16 @@ def extract_skills_from_jd(sections):
                     section_text,
                     aliases
                 ):
+
+                    print(
+                        "EXTRACTOR FOUND:",
+                        canonical_name
+                    )
+
                     if canonical_name not in result[section_name]:
+
                         result[section_name].append(
                             canonical_name
                         )
 
-    return result                        
+    return result
