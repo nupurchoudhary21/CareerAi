@@ -293,3 +293,6 @@ print("\n========== HIERARCHY MATCH ==========")
 print(
     unified_match["hierarchy_match"]
 )
+
+print("\n========== RELATED MATCH ==========")
+print(unified_match["related_match"])
