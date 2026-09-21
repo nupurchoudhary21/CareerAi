@@ -4,7 +4,7 @@ from .skill_gap import build_skill_gap
 from .evidence_matcher import build_evidence_aware_match
 from .hierarchy_matcher import analyze_skill_relationship
 from .related_skill_matcher import analyze_related_skill_match
-
+from .learning_roadmap import generate_learning_roadmap
 
 def build_unified_match(
     resume_skills,
@@ -84,6 +84,11 @@ def build_unified_match(
         related_match
     )
 
+    learning_roadmap = generate_learning_roadmap(
+        skill_gap["critical_gaps"],
+        resume_skills
+    )
+
     # 9. Final unified result
     return {
         "match_score": match_score,
@@ -91,5 +96,6 @@ def build_unified_match(
         "skill_gap": skill_gap,
         "evidence_match": evidence_match,
         "hierarchy_match": hierarchy_match,
-        "related_match": related_match
+        "related_match": related_match,
+        "learning_roadmap": learning_roadmap
     }
