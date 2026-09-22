@@ -266,7 +266,7 @@ def normalize_skill(skill):
             if skill in normalized_aliases:
                 return canonical_name
 
-        return skill
+    return skill
 
 
 def skill_in_text(text, alias):

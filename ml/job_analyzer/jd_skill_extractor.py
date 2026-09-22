@@ -19,9 +19,6 @@ def extract_skills_from_jd(sections):
 
         section_text = " ".join(section_data)
 
-        print("\nCHECKING SECTION:", section_name)
-        print("SECTION TEXT:", section_text)
-
         for category, skills in SKILL_ONTOLOGY.items():
 
             for canonical_name, aliases in skills.items():
@@ -30,12 +27,6 @@ def extract_skills_from_jd(sections):
                     section_text,
                     aliases
                 ):
-
-                    print(
-                        "EXTRACTOR FOUND:",
-                        canonical_name
-                    )
-
                     if canonical_name not in result[section_name]:
 
                         result[section_name].append(
