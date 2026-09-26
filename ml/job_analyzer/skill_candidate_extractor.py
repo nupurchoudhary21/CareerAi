@@ -1,5 +1,6 @@
 import json
 import requests
+from .skill_normalizer import normalize_candidates
 
 
 OLLAMA_URL = "http://localhost:11434/api/generate"
@@ -13,8 +14,9 @@ You are extracting skills from a job description.
 
 Read ONLY the text between <JOB_DESCRIPTION> and </JOB_DESCRIPTION>.
 
-Return ONLY a JSON array of skill names that are explicitly mentioned
-in that job description.
+Return ONLY a JSON object with exactly one key: "skills".
+
+The value of "skills" must be a JSON array of skill names.
 
 IMPORTANT:
 - Do NOT use the job title as a skill unless the same term appears
@@ -29,13 +31,22 @@ IMPORTANT:
 - Keep multi-word skills together.
 - Do not include explanations.
 - Do not include anything from these instructions.
+- Do NOT return generic words such as "certified", "certification",
+  "experience", "knowledge", "candidate", "professional", or "years".
+- Do NOT return category names as skills.
+- Do NOT return skill-to-value mappings.
+- Do NOT create additional JSON keys.
 
 Example:
+
 If the job description says:
 "Experience with Python, Django, PostgreSQL and Docker."
 
-Return:
-["Python", "Django", "PostgreSQL", "Docker"]
+Return exactly:
+
+{{
+  "skills": ["Python", "Django", "PostgreSQL", "Docker"]
+}}
 
 <JOB_DESCRIPTION>
 {job_description}
@@ -49,7 +60,8 @@ Return:
             "prompt": prompt,
             "stream": False,
             "format": "json"
-        }
+        },
+        timeout=120
     )
 
     response.raise_for_status()
@@ -57,6 +69,7 @@ Return:
     result = response.json()
 
     content = result["response"]
+
 
     try:
         candidates = json.loads(content)
@@ -66,11 +79,12 @@ Return:
 
         # Some models return {"skills": [...]}
         if isinstance(candidates, dict):
+            skills = candidates.get("skills",[])
 
-            for value in candidates.values():
+            if isinstance(skills, list):
+                return skills
 
-                if isinstance(value, list):
-                    return value
+            return []
 
     except json.JSONDecodeError:
         print("Could not parse LLM response:")
@@ -94,3 +108,15 @@ if __name__ == "__main__":
 
     for skill in candidates:
         print("-", skill)
+
+    normalized = normalize_candidates(candidates)
+
+    print("\nNORMALIZED RESULTS:\n")
+
+    for result in normalized:
+
+        print(
+            f"{result['candidate']} "
+            f"-> {result['normalized']} "
+            f"(known={result['known']})"
+        )    
