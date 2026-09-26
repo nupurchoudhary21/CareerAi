@@ -1,0 +1,9 @@
+original_candidate,classification,reason
+Database Programmer,JOB_TITLE,"Job title, not a skill."
+Java development,JOB_RESPONSIBILITY,Describes an activity ('developing in Java') rather than a distinct skill; the underlying skill (Java) is already captured separately.
+Jenkins configuration,JOB_RESPONSIBILITY,Describes an activity (configuring Jenkins) rather than a distinct skill; the underlying tool (Jenkins) is already captured separately.
+Multimedia Program Develop,JOB_RESPONSIBILITY,"Malformed phrase describing an activity/duty (developing multimedia programs), not a discrete named skill."
+Security Specialist,JOB_TITLE,"Job title, not a skill."
+Software Engineer,JOB_TITLE,"Job title, not a skill."
+Software Technician,JOB_TITLE,"Job title, not a skill."
+Training Development Specialist,JOB_TITLE,"Job title, not a skill."
