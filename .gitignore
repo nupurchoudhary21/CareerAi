@@ -1,1 +1,3 @@
 datasets/resumes/
+__pycache__/
+*.py[cod]
