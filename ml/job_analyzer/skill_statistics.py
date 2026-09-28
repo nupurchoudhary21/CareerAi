@@ -39,7 +39,6 @@ def analyze_skill_coverage(jobs):
 
     return results
 
-
 if __name__ == "__main__":
 
     jobs = load_jobs(
@@ -48,28 +47,58 @@ if __name__ == "__main__":
 
     results = analyze_skill_coverage(jobs)
 
-    results.sort(
-        key=lambda x: x["skill_count"]
+    # Count how often each skill appears
+    skill_frequency = {}
+
+    for result in results:
+        for skill in result["skills"]:
+            skill_frequency[skill] = (
+                skill_frequency.get(skill, 0) + 1
+            )
+
+    # Sort skills by frequency
+    sorted_skills = sorted(
+        skill_frequency.items(),
+        key=lambda x: x[1],
+        reverse=True
     )
 
-for result in results[:10]:
+    print(f"\nTotal jobs analyzed: {len(results)}")
+    print(f"Unique skills found: {len(skill_frequency)}")
 
-    print("\n" + "=" * 80)
+    print("\nTOP 50 MOST FREQUENT SKILLS")
+    print("=" * 60)
 
-    print(
-        f"TITLE: {result['job_title']}"
-    )
+    for skill, count in sorted_skills[:50]:
+        percentage = (count / len(results)) * 100
 
-    print(
-        f"SKILLS FOUND: {result['skill_count']}"
-    )
+        print(
+            f"{skill:<30} "
+            f"{count:>5} jobs "
+            f"({percentage:.2f}%)"
+        )
 
-    print(
-        f"CURRENT SKILLS: {result['skills']}"
-    )
+    print("\nJOBS WITH THE FEWEST EXTRACTED SKILLS")
+    print("=" * 60)
 
-    print("\nJOB DESCRIPTION:\n")
+    results.sort(key=lambda x: x["skill_count"])
 
-    print(result["job_description"])
+    for result in results[:10]:
+        print(
+            f"{result['job_title']}: "
+            f"{result['skill_count']} skills"
+        )
 
+    print("\nZERO-SKILL JOB DESCRIPTIONS")
     print("=" * 80)
+
+    zero_skill_jobs = [
+        result for result in results
+        if result["skill_count"] == 0
+    ]
+
+    for result in zero_skill_jobs[:10]:
+        print(f"\nTITLE: {result['job_title']}")
+        print("\nDESCRIPTION:")
+        print(result["job_description"])
+        print("=" * 80)    

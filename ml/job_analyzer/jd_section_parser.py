@@ -164,3 +164,23 @@ def parse_job_description(text):
             sections["required"].append(line)
 
     return sections
+
+
+if __name__ == "__main__":
+
+    text = """
+    Monitor network performance and test for weaknesses.
+    Set up user accounts, permissions and passwords.
+
+    Hands on experience in networking, routing and switching.
+
+    Experience with firewalls and VPNs.
+    """
+
+    sections = parse_job_description(text)
+
+    for section, lines in sections.items():
+        print(f"\n{section.upper()}:")
+
+        for line in lines:
+            print("-", line)

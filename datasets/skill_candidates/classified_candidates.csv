@@ -1,0 +1,129 @@
+Candidate,Classification
+.NET,possible_skill
+.NET Core,possible_skill
+Amazon Web Services (AWS),possible_skill
+Angular,confirmed_skill
+Angular 8.x+,possible_skill
+Ansible,confirmed_skill
+Apache,possible_skill
+Applied Mathematics,possible_skill
+Artificial Neural Network (ANN),possible_skill
+Azure Functions,possible_skill
+Bash,possible_skill
+Big Data,possible_skill
+Bnh Advisor Enterprise,possible_skill
+Bootstrap,possible_skill
+C#,confirmed_skill
+C++,confirmed_skill
+C/C++,possible_skill
+CFEngine,possible_skill
+CI pipelines via code,possible_skill
+CSS,possible_skill
+CSS3,possible_skill
+Chef,possible_skill
+Ci/CD,possible_skill
+Cloud Computing,possible_skill
+Cloudify,possible_skill
+Cobbler,possible_skill
+Cocoa Touch,possible_skill
+Core Animation,possible_skill
+Core Data,possible_skill
+Core Graphics,possible_skill
+Core Text,possible_skill
+DNS,possible_skill
+Database Design Administration,possible_skill
+Database Documentation,possible_skill
+Database Programmer,job_responsibility
+Deep Learning,possible_skill
+Defect Management,possible_skill
+Django,confirmed_skill
+Docker,confirmed_skill
+Elasticsearch,confirmed_skill
+Exploratory testing,possible_skill
+F5,possible_skill
+Foreman,possible_skill
+Fraud Prevention,possible_skill
+Gerrit,possible_skill
+Git,confirmed_skill
+GitLab CI,possible_skill
+Go,confirmed_skill
+GraphQL,confirmed_skill
+HTML,possible_skill
+HTML5,possible_skill
+HTTP,possible_skill
+IBM Rational Clearcase,possible_skill
+Image Processing,possible_skill
+Ionic,possible_skill
+JQuery,possible_skill
+JS,possible_skill
+Jasmine,possible_skill
+Java,confirmed_skill
+Java 8+,possible_skill
+Java development,possible_skill
+JavaScript,confirmed_skill
+Javascript,confirmed_skill
+Jenkins,confirmed_skill
+Jenkins configuration,possible_skill
+Karma,possible_skill
+Keras,confirmed_skill
+Kubernetes,confirmed_skill
+Linux,confirmed_skill
+Machine Learning,possible_skill
+Metadata,possible_skill
+Micro-services pattern,possible_skill
+Microsoft IIS,possible_skill
+MongoDB,confirmed_skill
+MsSQL,possible_skill
+Mule,possible_skill
+Multimedia Program Develop,job_responsibility
+MySQL,confirmed_skill
+NTP,possible_skill
+Node,possible_skill
+Node.js,confirmed_skill
+NodeJS,possible_skill
+Object-oriented design,possible_skill
+Objective-C,possible_skill
+OpenAM,possible_skill
+OpenCV,confirmed_skill
+Oracle,possible_skill
+PHP,possible_skill
+Perl,confirmed_skill
+PhoneGap,possible_skill
+PostgreSQL,confirmed_skill
+Puppet,possible_skill
+PyTorch,confirmed_skill
+PyUnit,possible_skill
+Python,confirmed_skill
+REST,possible_skill
+React,confirmed_skill
+ReactJS,possible_skill
+Redis,confirmed_skill
+Regression testing,possible_skill
+Relational OLTP queries,possible_skill
+Relational database design,possible_skill
+Restful services,possible_skill
+Ruby,confirmed_skill
+SQL,possible_skill
+SYSPRO’s ERP package,possible_skill
+Scala,confirmed_skill
+Security Configuration Management,possible_skill
+Security Specialist,job_responsibility
+Selenium,possible_skill
+Software Engineer,job_responsibility
+Software Technician,job_responsibility
+Spark,confirmed_skill
+Standard Procedure Definition,possible_skill
+Statistics,possible_skill
+TCP/IP,possible_skill
+Telecommunication,possible_skill
+TensorFlow,confirmed_skill
+Terraform,confirmed_skill
+Test Management,possible_skill
+Titanium,possible_skill
+Training Development Specialist,job_responsibility
+Unit testing with Jasmine or protractor,possible_skill
+Version Control,possible_skill
+Vue,confirmed_skill
+Windows,possible_skill
+WordPress,possible_skill
+computer vision,possible_skill

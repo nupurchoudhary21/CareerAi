@@ -82,6 +82,7 @@ SKILL_ONTOLOGY = {
         "jQuery": ["jquery"],
     },
     "databases": {
+        "Database": ["database", "databases"],
         "MongoDB": ["mongodb", "mongo"],
         "MySQL": ["mysql"],
         "PostgreSQL": ["postgresql", "postgres"],
@@ -101,7 +102,32 @@ SKILL_ONTOLOGY = {
         "Elasticsearch": ["elasticsearch"],
         "Microsoft SQL Server": ["microsoft sql server", "mssql"],
         "Relational Database Design": ["relational database design"],
+        "Database Administration": [
+            "database administration",
+            "database administrator",
+            "database management"
+        ],
+        "Database Management": [
+            "database management",
+            "database management systems",
+            "dbms"
+        ],
+        "Database Design": [
+            "database design",
+            "database schema design"
+        ],
+        "Database Backup": [
+            "database backup",
+            "database backups",
+            "database recovery"
+        ],
+        "Database Monitoring": [
+            "database monitoring",
+            "database performance monitoring"
+        ],  
+
     },
+
     "ai_ml": {
         "Machine Learning": ["machine learning", "machine-learning", "ml"],
         "Deep Learning": ["deep learning", "deep-learning", "dl"],
@@ -198,6 +224,10 @@ SKILL_ONTOLOGY = {
             "object oriented programming",
             "object-oriented programming",
         ],
+        "Production Support": [
+            "production support",
+            "production environment support"
+        ],
         "Real-Time Systems": ["real-time", "real time"],
         "RESTful Backend": ["restful backend"],
         "Web Application Development": ["web application development"],
@@ -218,6 +248,7 @@ SKILL_ONTOLOGY = {
     },
     # ================= NEW CATEGORIES (see note at top of file) =================
     "devops": {
+        "DevOps": ["devops","dev ops"],
         "Ansible": ["ansible"],
         "CFEngine": ["cfengine"],
         "Pipeline as Code": ["pipeline as code", "ci pipelines via code"],
@@ -237,11 +268,28 @@ SKILL_ONTOLOGY = {
         # matched.
         "Apache Spark": ["apache spark"],
     },
-    "networking": {
-        "DNS": ["dns"],
-        "HTTP": ["http"],
-        "NTP": ["ntp"],
-        "TCP/IP": ["tcp/ip"],
+    "networking": {   
+        "DNS": ["dns", "domain name system"],
+        "HTTP": ["http", "hypertext transfer protocol"],
+        "NTP": ["ntp", "network time protocol"],
+        "TCP/IP": ["tcp/ip", "tcp ip"],
+        "FTP": [
+            "ftp",
+            "file transfer protocol"
+        ],
+        "Networking": ["networking", "computer networking"],
+        "Routing": ["routing", "network routing"],
+        "Switching": ["switching", "network switching"],
+        "LAN": ["lan", "local area network"],
+        "WAN": ["wan", "wide area network"],
+        "VPN": ["vpn", "virtual private network"],
+        "Firewall": ["firewall", "firewalls"],
+        "Router": ["router", "routers"],
+        "Network Administration": [
+            "network administration",
+            "network administrator",
+            "network management"
+        ],
     },
     "testing": {
         "Exploratory Testing": ["exploratory testing"],
@@ -251,6 +299,12 @@ SKILL_ONTOLOGY = {
         "Regression Testing": ["regression testing"],
         "Selenium": ["selenium"],
         "Protractor": ["protractor"],
+        "Manual Testing": ["manual testing"],
+        "Integration Testing": ["integration testing"],
+        "System Testing": ["system testing"],
+        "Functional Testing": ["functional testing"],
+        "Test Cases": ["test cases", "test case"],
+        "Web Testing": ["web testing"],
     },
     "mobile_development": {
         "Cocoa Touch": ["cocoa touch"],
@@ -260,11 +314,18 @@ SKILL_ONTOLOGY = {
         "Core Text": ["core text"],
         "Ionic": ["ionic"],
         "PhoneGap": ["phonegap"],
+        "Flutter": ["flutter"]
     },
     "operating_systems": {
         "Linux": ["linux"],
         "Windows": ["windows"],
+        "Active Directory": [
+    "active directory",
+    "microsoft active directory",
+    "windows active directory"
+],
     },
+    
     "cybersecurity": {
         "OpenAM": ["openam"],
     },
