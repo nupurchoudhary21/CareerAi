@@ -54,7 +54,7 @@ from job_analyzer.unified_matcher import (
 # 1. PROCESS RESUME
 # ==========================================
 
-pdf_path = "../datasets/resumes/resume2.pdf"
+pdf_path = "../datasets/resumes/resume1.pdf"
 
 raw_text = extract_text_from_pdf(
     pdf_path
@@ -146,6 +146,16 @@ print("\nResume Skills:")
 print(unique_skills)
 
 
+print("\n========== ORIGINAL RESUME EVIDENCE ==========")
+
+print("Type:", type(final_skill_profile))
+print("Total entries:", len(final_skill_profile))
+
+for skill, data in list(final_skill_profile.items())[:5]:
+    print(f"\nSkill: {skill}")
+    print("Data:", data)
+
+
 # ==========================================
 # 7. LOAD JOB DATASET
 # ==========================================
@@ -161,7 +171,7 @@ print("\nTotal Jobs:", len(jobs))
 # 8. TEST ONE JOB
 # ==========================================
 
-job = jobs[1]
+job = jobs[0]
 
 print("\n========== SELECTED JOB ==========")
 print("Title:", job["job_title"])
